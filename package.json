@@ -1,7 +1,7 @@
 {
-  "name": "start_api",
+  "name": "ticket_api",
   "version": "1.0.0",
-  "description": "Api padrão para iniciar o servidor",
+  "description": "Sistema de tickets",
   "main": "server.js",
   "author": "Marcus Lobato",
   "license": "MIT",
