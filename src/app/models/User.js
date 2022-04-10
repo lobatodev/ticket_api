@@ -1,6 +1,5 @@
 import Sequelize, { Model } from 'sequelize';
 import bcrypt from 'bcrypt';
-import { v4 as uuidv4 } from 'uuid';
 
 class User extends Model {
   static init(sequelize) {
@@ -11,11 +10,10 @@ class User extends Model {
           primaryKey: true,
           autoIncrement: true,
         },
-        uuid: {
-          type: Sequelize.UUID,
+        google_id: {
+          type: Sequelize.STRING,
           allowNull: false,
           unique: true,
-          defaultValue: uuidv4(),
         },
         username: {
           type: Sequelize.STRING,

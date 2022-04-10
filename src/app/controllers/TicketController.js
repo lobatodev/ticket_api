@@ -13,7 +13,8 @@ class TicketControler {
         { model: TicketStatus, attributes: ['description'] },
         { model: TicketProblem, attributes: ['description'] },
         { model: TicketCriticidad, attributes: ['description'] },
-        { model: TicketRelated, attributes: ['description'] }],
+        { model: TicketRelated, attributes: ['description'] },
+      ],
     });
     if (tickets.length) {
       return res.status(200).json(tickets);
@@ -28,19 +29,31 @@ class TicketControler {
         { model: TicketStatus, attributes: ['description'] },
         { model: TicketProblem, attributes: ['description'] },
         { model: TicketCriticidad, attributes: ['description'] },
-        { model: TicketRelated, attributes: ['description'] }],
+        { model: TicketRelated, attributes: ['description'] },
+      ],
       where: { id },
     });
-    const messages = await TicketMessage.findAll({includes:[
-      { model: User, attributes: ['name', 'email'] },
-    ], where:{ id_ticket: id }});
-    if (tickets.length) {
-      return res.status(200).json({ticket: tickets, messages: messages});
+    const messages = await TicketMessage.findAll({
+      includes: [{ model: User, attributes: ['name', 'email'] }],
+      where: { id_ticket: id },
+    });
+    if (tickets) {
+      return res.status(200).json({ ticket: tickets, messages: messages });
     }
     return res.status(204).json({ msg: 'Nenhum ticket encontrado' });
   }
   async insert(req, res) {
-    const { title, description, id_requester, id_responsible, id_related, id_problem, id_criticidad, id_status, message} = req.body;
+    const {
+      title,
+      description,
+      id_requester,
+      id_responsible,
+      id_related,
+      id_problem,
+      id_criticidad,
+      id_status,
+      message,
+    } = req.body;
     try {
       const ticket = await Ticket.create({
         title,
@@ -52,7 +65,7 @@ class TicketControler {
         id_criticidad,
         id_status,
       });
-      if(ticket && message){
+      if (ticket && message) {
         await TicketMessage.create({
           id_user: id_requester,
           id_ticket: ticket.id,
@@ -69,11 +82,11 @@ class TicketControler {
     const user = await User.findOne({ where: { uuid: userUUID } });
     const { id_ticket, message } = req.body;
     try {
-        await TicketMessage.create({
-          id_user: user.id,
-          id_ticket: id_ticket,
-          message,
-        });
+      await TicketMessage.create({
+        id_user: user.id,
+        id_ticket: id_ticket,
+        message,
+      });
       return res.status(200).json('Mensagem enviada com sucesso!');
     } catch (err) {
       return res.status(400).json({ msg: 'Erro ao gerar mensagem.' });

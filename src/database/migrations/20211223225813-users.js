@@ -1,13 +1,13 @@
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    return queryInterface.createTable("users", {
+    return queryInterface.createTable('users', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
       },
-      uuid: {
-        type: Sequelize.UUID,
+      google_id: {
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
@@ -41,16 +41,16 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: {
-          model: "user_types",
-          key: "id",
+          model: 'user_types',
+          key: 'id',
         },
-        onUpdate: "CASCADE",
-        onDelete: "CASCADE",
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
     });
   },
 
   down: async (queryInterface) => {
-    return queryInterface.dropTable("users");
+    return queryInterface.dropTable('users');
   },
 };

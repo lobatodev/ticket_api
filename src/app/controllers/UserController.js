@@ -12,10 +12,11 @@ class UserControler {
     return res.status(204).json({ msg: 'Nenhum usuário encontrado' });
   }
   async insert(req, res) {
-    const { uuid, name, username, email, password, id_user_type } = req.body;
+    const { google_id, name, username, email, password, id_user_type } =
+      req.body;
     try {
       const user = await User.create({
-        uuid,
+        google_id,
         name,
         username,
         email,
